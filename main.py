@@ -1,26 +1,12 @@
-from fastapi import FastAPI, BackgroundTasks
-from pydantic import BaseModel
-import fuzzer  # Import your fuzzing logic here
+from fuzzer.directories import run_directory_fuzzing
 
-app = FastAPI()
-
-# Define the model for the input payload
-class FuzzingOptions(BaseModel):
-    url: str
-    directories: bool = True
-    vhosts: bool = True
-    api_endpoints: bool = False
-    parameters: bool = False
-
-# Store fuzzing results temporarily (in-memory or you could use a database)
-results = []
-
-@app.post("/start-fuzzing")
-async def start_fuzzing(options: FuzzingOptions, background_tasks: BackgroundTasks):
-    # Add the fuzzing task to be executed in the background
-    background_tasks.add_task(fuzzer.start, options.dict())  # Adjust the call to match your fuzzer function
-    return {"message": "Fuzzing started"}
-
-@app.get("/get-results")
-async def get_results():
-    return {"results": results}
+if __name__ == "__main__":
+    url = "http://example.com"  # Target website
+    wordlist_path = "config/wordlists/dir_wordlist.txt"  # Path to wordlist
+    
+    print(f"Starting directory fuzzing on {url}")
+    found_dirs = run_directory_fuzzing(url, wordlist_path)
+    
+    print("\nFuzzing complete. Found directories:")
+    for directory in found_dirs:
+        print(directory)

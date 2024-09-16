@@ -1,0 +1,4 @@
+httpx
+dnspython
+Jinja2
+boofuzz
