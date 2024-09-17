@@ -1,0 +1,6 @@
+www
+mail
+admin
+api
+blog
+dev

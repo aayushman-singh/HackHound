@@ -1,5 +1,5 @@
 import unittest
-from fuzzer.directories import load_wordlist, fuzz_directories
+from app.directories import load_wordlist, fuzz_directories
 
 class TestDirectoryFuzzing(unittest.TestCase):
     

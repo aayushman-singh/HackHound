@@ -2,3 +2,6 @@ httpx
 dnspython
 Jinja2
 boofuzz
+requests
+fastapi
+uvicorn

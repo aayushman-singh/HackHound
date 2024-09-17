@@ -1,0 +1,8 @@
+
+api/v1/users
+api/v1/products
+api/v1/orders
+login
+signup
+dashboard
+admin
