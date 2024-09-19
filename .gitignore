@@ -1,2 +1,4 @@
 
 /venv
+/web-fuzzer-frontend/node_modules
+/app/__pycache__

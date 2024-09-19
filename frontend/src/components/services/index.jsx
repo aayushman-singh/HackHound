@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Globe, FolderTree, Code, Server } from 'lucide-react';
 
@@ -10,6 +10,8 @@ const FuzzerForm = () => {
   const [fuzzApi, setFuzzApi] = useState(false);
   const [fuzzVhost, setFuzzVhost] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState(null); // Add state to store fuzzing results
+  const [errorMessage, setErrorMessage] = useState(null); // For any error messages
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,10 +32,12 @@ const FuzzerForm = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/fuzz', data);
+      setResults(response.data.results); // Set the fuzzing results from the backend
       console.log(response.data);
       alert('Fuzzing completed successfully!');
     } catch (error) {
       console.error("Error fuzzing:", error);
+      setErrorMessage('Failed to complete fuzzing. Please try again.');
       alert('Failed to complete fuzzing. Please try again.');
     } finally {
       setIsLoading(false);
@@ -129,8 +133,25 @@ const FuzzerForm = () => {
           Start Fuzzing
         </button>
       </form>
+      {/* Display results */}
+ {results && (
+  <div className="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+    <h2 className="text-2xl font-bold mb-4">Fuzzing Results:</h2>
+    <pre className="bg-gray-900 p-4 rounded-lg text-white overflow-auto">
+      {JSON.stringify(results, null, 2)}
+    </pre>
+  </div>
+)}
+
+{/* Display error message if any */}
+{errorMessage && (
+  <div className="mt-8 bg-red-600 p-6 rounded-lg shadow-lg text-white">
+    <p>{errorMessage}</p>
+  </div>
+)}
     </div>
   );
 };
+ 
 
 export default FuzzerForm;
