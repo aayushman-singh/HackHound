@@ -21,25 +21,12 @@ A powerful web application security testing tool built with React and Python, de
 
 2. **Install Dependencies**
    ```bash
-   # Install root project dependencies
-   npm install
 
    # Install frontend dependencies
-   cd frontend
    npm install
 
    # Install Python dependencies
-   cd ../app
    pip install -r requirements.txt
-   ```
-
-3. **Configure Environment**
-   ```bash
-   # In frontend directory
-   cp .env.example .env
-
-   # In app directory
-   cp .env.example .env
    ```
 
 ### Starting the Application
