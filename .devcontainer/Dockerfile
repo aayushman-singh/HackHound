@@ -1,32 +1,39 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:20
+FROM node:20
 
-# Install Python 3.10
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    python3.10 \
-    python3-pip \
-    python3.10-venv \
-    git \
-    curl \
-    wget \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+# Install Python and basic utilities
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-venv git && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set Python 3.10 as default
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
-
-# [Optional] Install global node packages
-RUN su node -c "npm install -g typescript ts-node"
-
-# Create and set working directory
 WORKDIR /workspace
 
-# Copy package.json and requirements.txt (if they exist)
-COPY package*.json requirements.txt* ./
+# Create and activate virtual environment
+RUN python3 -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
-# Install dependencies (if files exist)
-RUN if [ -f "package.json" ]; then npm install; fi && \
-    if [ -f "requirements.txt" ]; then pip install -r requirements.txt; fi
+# Copy package files first
+COPY package.json .
+COPY requirements.txt .
+
+# Install root dependencies
+RUN npm install
+
+# Copy frontend files and install its dependencies
+COPY frontend frontend/
+WORKDIR /workspace/frontend
+RUN npm install
+RUN npm install @rollup/rollup-linux-x64-gnu
+
+# Back to workspace root
+WORKDIR /workspace
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
+
+# Expose ports
+EXPOSE 5173 5000
+
+CMD ["npm", "start"]
