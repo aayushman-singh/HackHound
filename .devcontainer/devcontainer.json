@@ -1,0 +1,67 @@
+{
+  "name": "Node.js 20 & Python 3.10 Environment",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [5173, 5000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // JavaScript/Node.js extensions
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+
+        // Python extensions
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+
+        // General extensions
+        "eamodio.gitlens",
+        "GitHub.copilot"
+      ],
+      "settings": {
+        // General settings
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
+
+        // Python settings
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+
+        // JavaScript/Node.js settings
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "npm install && pip3 install -r requirements.txt",
+  "remoteUser": "node",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  // Add any environment variables needed for your project
+  "remoteEnv": {
+    "NODE_ENV": "development",
+    "PYTHONPATH": "${containerWorkspaceFolder}"
+  }
+}
