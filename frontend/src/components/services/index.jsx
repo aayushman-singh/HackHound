@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Globe, FolderTree, Code, Server } from 'lucide-react';
 
+const API_BASE_URL = "http://hack-hound.eba-jhjx2qhe.ap-south-1.elasticbeanstalk.com";
+
 const FuzzerForm = () => {
   const [url, setUrl] = useState('');
   const [domain, setDomain] = useState('');
@@ -31,7 +33,7 @@ const FuzzerForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/fuzz', data);
+      const response = await axios.post(`${API_BASE_URL}/fuzz`, data);
       setResults(response.data.results); // Set the fuzzing results from the backend
       console.log(response.data);
       alert('Fuzzing completed successfully!');
