@@ -144,51 +144,6 @@ const Home = () => {
     </div>
   </div>
 </section>
-
-
-      {/* Section 4: Team */}
-      <section id="team" className="min-h-screen flex flex-col justify-center items-center relative py-20">
-        <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] bg-cover bg-center opacity-10"></div>
-        <div className="relative z-20 container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 mb-8">
-            Meet Our Team
-          </h2>
-          <p className="text-lg text-gray-300 max-w-4xl text-center mx-auto mb-12">
-            Our team consists of cybersecurity experts, data scientists, and investigators with years of experience in digital forensics. They are committed to ensuring that Tattletale remains the top choice for online crime investigations.
-          </p>
-          <div className="flex gap-8">
-          <TeamMember
-              name="Aayushman Singh"
-              role="Developer (Backend)"
-              image="/images/teamMembers/aayushman.jpeg"
-            />
-            <TeamMember
-              name="Arpit Kukreti"
-              role="Developer (Frontend)"
-              image="/images/teamMembers/arpit.jpeg"
-            />
-            <TeamMember
-              name="Kartik Kandpal"
-             role="Developer (Frontend)"
-              image="/images/teamMembers/kartik.jpeg"
-            /><TeamMember
-            name="Abdul Ahad"
-            role="Developer (Machine Learning)"
-           image="/images/teamMembers/abdul.jpeg"
-          />
-          <TeamMember
-            name="Arpita"
-            role="Designer and Content Manager"
-            image="/images/teamMembers/arpita.jpeg"
-          />
-          <TeamMember
-            name="Rishabh Bajpai"
-            role="Designer and Video Editor"
-           image="/images/teamMembers/rishab.jpeg"
-          />
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
