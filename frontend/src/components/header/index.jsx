@@ -1,10 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link as ScrollLink } from 'react-scroll'; // For smooth scrolling
-import { Link, useNavigate } from 'react-router-dom'; // For navigation
+import { useState, useEffect, useRef } from 'react';
+import { Link as ScrollLink, scroller, animateScroll } from 'react-scroll'; // For smooth scrolling
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; // For navigation
 import { useAuth } from '../../contexts/authContext';
 import { doSignOut } from '../../firebase/auth';
 
 const Header = () => {
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    if (hash) {
+      scroller.scrollTo(hash, {
+        smooth: true,
+        duration: 500,
+      });
+    }
+  }, []);
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown
@@ -37,12 +46,18 @@ const Header = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 h-16 bg-black/30 backdrop-blur-lg shadow-lg flex justify-between items-center px-8 transition-all duration-300">
       {/* Logo Section */}
-      <div className="flex items-center space-x-1"> {/* Flex container for alignment */}
-        {/* Text Logo */}
-        <div className="text-2xl font-bold text-white font-montserrat cursor-pointer">
-          <Link to="/home" smooth={true} duration={500} className="hover:text-blue-400 transition-colors">
-            HackHound
-          </Link>
+      <div className="flex items-center space-x-1">
+        <div
+          className="text-2xl font-bold text-white font-montserrat cursor-pointer hover:text-blue-400 transition-colors"
+          onClick={() => {
+            navigate("/home");
+            animateScroll.scrollToTop({
+              duration: 500,
+              smooth: true,
+            });
+          }}
+        >
+          HackHound
         </div>
       </div>
 
@@ -50,14 +65,14 @@ const Header = () => {
       <div className="flex items-center space-x-6 relative">
         {userLoggedIn ? (
           <>
-            <ScrollLink
-              to="about"
-              smooth={true}
-              duration={500}
+            <button
+              onClick={() => {
+                navigate("/home#about");
+              }}
               className="text-white text-sm font-semibold cursor-pointer hover:text-blue-400 transition-colors"
             >
               About
-            </ScrollLink>
+            </button>
 
             {/* Dropdown for Services */}
             <div className="relative" ref={dropdownRef}>
@@ -82,25 +97,16 @@ const Header = () => {
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-50">
                   {/* Redirect to Fuzzing Page */}
-                  <Link
+                  <RouterLink
                     to="/services"
                     className="block px-4 py-2 text-sm text-white hover:bg-gray-700 transition-colors"
                     onClick={() => setDropdownOpen(false)} // Close dropdown on click
                   >
                     Fuzzing
-                  </Link>
+                  </RouterLink>
                 </div>
               )}
             </div>
-
-            <ScrollLink
-              to="team"
-              smooth={true}
-              duration={500}
-              className="text-white text-sm font-semibold cursor-pointer hover:text-blue-400 transition-colors"
-            >
-              Team
-            </ScrollLink>
 
             <button
               onClick={handleLogout}
@@ -111,18 +117,18 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link
+            <RouterLink
               to="/login"
               className="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-blue-800 transition-colors"
             >
               Login
-            </Link>
-            <Link
+            </RouterLink>
+            <RouterLink
               to="/register"
               className="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-green-800 transition-colors"
             >
               Register
-            </Link>
+            </RouterLink>
           </>
         )}
       </div>

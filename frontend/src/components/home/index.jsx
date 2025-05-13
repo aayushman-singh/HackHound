@@ -1,5 +1,8 @@
-import React from 'react';
-import { Link } from 'react-scroll';
+import { Link, scroller } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
 
 const Card = ({ icon, title, children }) => (
   <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 rounded-xl p-6 flex flex-col items-center">
@@ -9,7 +12,7 @@ const Card = ({ icon, title, children }) => (
   </div>
 );
 
-const GlassButton = ({ to, children }) => (
+const GlassButtonScroll = ({ to, children }) => (
   <Link
     to={to}
     smooth={true}
@@ -19,7 +22,16 @@ const GlassButton = ({ to, children }) => (
     {children}
   </Link>
 );
-
+const GlassButtonRouter = ({ to, children }) => (
+  <RouterLink
+    to={to}
+    smooth={true}
+    duration={500}
+    className="mt-8 inline-block px-8 py-4 text-lg font-semibold bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 rounded-full text-white hover:bg-opacity-20 transition-all"
+  >
+    {children}
+  </RouterLink>
+);
 // Custom Icon components
 const ShieldIcon = () => (
   <svg className="w-16 h-16 mb-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -40,24 +52,6 @@ const GlassCard = ({ title, children }) => (
   </div>
 );
 
-const TeamMember = ({ name, role, description, image }) => (
-  <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-4 border border-white border-opacity-20 text-center w-64"> {/* Fixed width for the card */}
-    {/* Image Container */}
-    <div className="relative w-[102.04px] h-[160px] mx-auto mb-4"> {/* Fixed dimensions for the image container */}
-      <img
-        src={image}
-        alt={`${name}'s profile`}
-        className="absolute top-0 left-0 w-full h-full object-cover rounded-sm"
-      />
-    </div>
-    
-    <h3 className="text-lg font-semibold text-white mb-1">{name}</h3> {/* Adjusted text size */}
-    <p className="text-sm text-blue-400 mb-2">{role}</p> {/* Adjusted text size */}
-    
-    {/* Optional description */}
-    <p className="text-xs text-white">{description}</p> {/* Adjusted text size */}
-  </div>
-);
 
 const FileTextIcon = () => (
   <svg className="w-16 h-16 mb-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -66,6 +60,16 @@ const FileTextIcon = () => (
 );
 
 const Home = () => {
+  useEffect(() => {
+    const hash = location.hash?.replace("#", "");
+    if (hash) {
+      scroller.scrollTo(hash, {
+        smooth: true,
+        duration: 500,
+        offset: -70, // if you have a sticky header
+      });
+    }
+  }, [location]);
   return (
     <div className="bg-gradient-to-br from-gray-900 to-blue-900 text-white min-h-screen">
       {/* Section 1: Home */}
@@ -78,15 +82,15 @@ const Home = () => {
           <p className="text-xl sm:text-2xl text-gray-300 mt-4 max-w-3xl mx-auto">
             Enhancing Web Application Security: Comprehensive Fuzzing for Vulnerability Detection and Mitigation.
           </p>
-          <GlassButton to="about">
+          <GlassButtonScroll to="about">
             Learn More
-          </GlassButton>
+          </GlassButtonScroll>
           <div className="text-center mt-8">
-            <Link to ="/services"
+            <RouterLink to ="/services"
               className="inline-block px-7 py-3 text-lg font-semibold bg-blue-600 bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all"
             >
               Explore Services
-            </Link>
+            </RouterLink>
           </div>
         </div>
       </section>
@@ -136,11 +140,11 @@ const Home = () => {
       </GlassCard>
     </div>
     <div className="text-center mt-12">
-      <Link to="/services"
+      <RouterLink to="/services"
         className="inline-block px-8 py-4 text-lg font-semibold bg-blue-600 bg-opacity-50 rounded-full hover:bg-opacity-75 transition-all"
       >
         Explore Services
-      </Link>
+      </RouterLink>
     </div>
   </div>
 </section>

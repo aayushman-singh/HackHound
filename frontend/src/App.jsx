@@ -1,4 +1,3 @@
-import React from 'react'
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
 import FuzzerForm from './components/services';
