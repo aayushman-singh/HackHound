@@ -8,11 +8,10 @@ from app.vhosts import fuzz_virtual_hosts
 
 app = FastAPI()
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
+    allow_origins=["*"], 
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -32,26 +31,26 @@ async def fuzz(data: FuzzRequest):
     vulnerabilities = []
 
     if actions.get("fuzz_directory"):
-        dir_wordlist = "../config/wordlists/dir_wordlist.txt"
+        dir_wordlist = "./config/wordlists/dir_wordlist.txt"
         found_dirs = run_directory_fuzzing(url, dir_wordlist)
         results["directories"] = found_dirs
         vulnerabilities.extend(found_dirs)  # Add directory vulnerabilities
 
     if actions.get("fuzz_subdomain") and domain:
-        sub_wordlist = "../config/wordlists/subdomains.txt"
+        sub_wordlist = "./config/wordlists/subdomains.txt"
         found_subdomains = run_subdomain_fuzzing(domain, sub_wordlist)
         results["subdomains"] = found_subdomains
         vulnerabilities.extend(found_subdomains)  # Add subdomain vulnerabilities
 
     if actions.get("fuzz_vhost") and domain:
-        vhost_wordlist = "../config/wordlists/vhosts.txt"
+        vhost_wordlist = "./config/wordlists/vhosts.txt"
         found_vhosts = fuzz_virtual_hosts(domain, vhost_wordlist)
         results["virtual_hosts"] = found_vhosts
         vulnerabilities.extend(found_vhosts)  # Add virtual host vulnerabilities
 
     if actions.get("fuzz_api"):
         params = {'id': '1'}
-        api_wordlist = "../config/wordlists/api_endpoints.txt"
+        api_wordlist = "./config/wordlists/api_endpoints.txt"
         payloads = ["' OR '1'='1", '<script>alert(1)</script>', '../../../../../etc/passwd']
         api_vulns = run_api_fuzzing(url,api_wordlist, payloads)
         vulnerabilities.extend(api_vulns)  # Add API parameter vulnerabilities

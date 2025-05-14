@@ -5,3 +5,4 @@
 
 /app/venv
 .env
+app/hack-hound.pem
