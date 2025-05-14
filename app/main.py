@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from apis import run_api_fuzzing, fuzz_api_headers
-from directories import run_directory_fuzzing
-from subdomains import run_subdomain_fuzzing
-from vhosts import fuzz_virtual_hosts
+from app.apis import run_api_fuzzing, fuzz_api_headers
+from app.directories import run_directory_fuzzing
+from app.subdomains import run_subdomain_fuzzing
+from app.vhosts import fuzz_virtual_hosts
 
 app = FastAPI()
 
