@@ -1,134 +1,74 @@
-# Hackhound - Advanced Web Security Testing Tool
+# HackHound
 
-A powerful web application security testing tool built with React and Python, designed for security researchers and penetration testers. Hackhound combines modern frontend technologies with robust backend fuzzing capabilities to provide comprehensive web application security testing.
+Web fuzzer with a modern UI — Vite + React frontend, FastAPI engine. Built for security researchers and pentesters who want a fuzzer that doesn't fight them.
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v20 or later)
-- Python 3.10 or later
-- npm or yarn package manager
-
-### Local Development Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/hackhound.git
-   cd hackhound
-   ```
-
-2. **Install Dependencies**
-   ```bash
-
-   # Install frontend dependencies
-   npm install
-
-   # Install Python dependencies
-   pip install -r requirements.txt
-   ```
-
-### Starting the Application
-
-You can start the application in several ways:
-
-1. **Start everything (recommended)**
-   ```bash
-   npm start
-   ```
-   This will run both frontend and backend concurrently
-
-2. **Start frontend only**
-   ```bash
-   npm run start:frontend
-   ```
-   Frontend will be available at http://localhost:5173
-
-3. **Start backend only**
-   ```bash
-   npm run start:backend
-   ```
-   API will be available at http://localhost:5000
-
-### Open Using Daytona  
-
-1. **Install Daytona**: Follow the [Daytona installation guide](https://www.daytona.io/docs/installation/installation/).  
-2. **Create the Workspace**:  
-   ```bash  
-   daytona create <https://github.com/aayushman-singh/HackHound> 
-   ```  
+[**Live →**](https://www.aayushman.dev/hack-hound) · [**Issues →**](https://github.com/aayushman-singh/HackHound/issues)
 
 ---
 
-## ✨ Features
+## Why
 
-- **Multi-Mode Fuzzing**
-  - Directory fuzzing
-  - Subdomain enumeration
-  - Virtual host discovery
-  - API endpoint fuzzing
+Most web fuzzers ship as command-line tools with no shared state, no UI, and brittle wordlist management. HackHound treats fuzzing as an interactive workflow — you steer it from the browser, results stream live, runs are reproducible.
 
-- **Advanced Security Testing**
-  - Parameter injection testing
-  - Header manipulation
-  - Authentication bypass attempts
-  - Custom payload support
+## Features
 
-- **Modern Tech Stack**
-  - React frontend with Vite
-  - FastAPI backend
-  - Real-time updates
-  - Responsive UI
-  - Customizable wordlists
+- **Multi-mode fuzzing** — directories, subdomains, virtual hosts, API endpoints
+- **Parameter injection** — query, body, header surfaces
+- **Header manipulation** + auth bypass attempts
+- **Custom payloads** + wordlist management
+- **Real-time UI** — results stream as they land
+- **Firebase auth** — runs scoped per user
 
-- **Developer Experience**
-  - Hot reloading
-  - Concurrent frontend/backend development
-  - Standardized development environment
-  - Comprehensive logging
-  - Easy deployment
+## Stack
 
----
+**Frontend** — React 18 · Vite · React Router · Axios · Firebase Auth · Lucide
+**Backend** — Python 3.10 · FastAPI · Pydantic · CORS
 
-## 🛠 Tech Stack
+## Quick start
 
-### Frontend
-- React 18
-- Vite
-- React Router DOM
-- Axios
-- Firebase Authentication
-- Lucide React Icons
+```bash
+git clone https://github.com/aayushman-singh/HackHound.git
+cd HackHound
 
-### Backend
-- Python 3.10
-- FastAPI
-- CORS middleware
-- Pydantic for validation
+# Frontend deps
+npm install
 
----
+# Backend deps
+pip install -r requirements.txt
 
-## 📄 API Documentation
+# Run both concurrently
+npm start
+```
 
-The API documentation is available at `http://localhost:5000/docs` when running the backend server.
+Frontend: `http://localhost:5173` · API: `http://localhost:5000` · Docs: `http://localhost:5000/docs`
 
-Key endpoints:
-- `POST /fuzz`: Main fuzzing endpoint
-- `GET /health`: Health check endpoint
+## API endpoints
 
----
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `POST` | `/fuzz` | Main fuzzing endpoint |
+| `GET` | `/health` | Health check |
 
-## 👥 Contributing
+Full schemas at `/docs` (FastAPI auto-generated).
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Development
 
----
+```bash
+npm run start:frontend   # Vite dev server only
+npm run start:backend    # FastAPI uvicorn only
+npm start                # Both concurrently
+```
 
-## 📝 License
+## Daytona one-shot
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```bash
+daytona create https://github.com/aayushman-singh/HackHound
+```
+
+## Author
+
+Built by [Aayushman Singh](https://aayushman.dev) — engineer building autonomous coding agents and security tooling. Smart India Hackathon '24 winner.
+
+## License
+
+MIT
